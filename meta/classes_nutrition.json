@@ -1,0 +1,640 @@
+{
+  "apple_pie": {
+  "protein": "2.4g",
+  "calories": "265Kcl",
+  "carbohydrate": "37.1g",
+  "energy": "1109Kj",
+  "fat": "12.5g"
+},
+
+  "baby_back_ribs": {
+  "protein": "16.12g",
+  "calories": "282Kcl",
+  "carbohydrate": "0.30g",
+  "energy": "1179.9Kj",
+  "fat": "23.58g"
+},
+
+  "baklava": {
+  "protein": "6.64g",
+  "calories": "428Kcl",
+  "carbohydrate": "37.53g",
+  "energy": "1790.8Kj",
+  "fat": "29.13g"
+},
+
+  "beef_carpaccio": {
+  "protein": "22.31g",
+  "calories": "119Kcl",
+  "carbohydrate": "0.45g",
+  "energy": "497.9Kj",
+  "fat": "2.62g"
+},
+
+  "beef_tartare": {
+  "protein": "17.78g",
+  "calories": "210Kcl",
+  "carbohydrate": "0.63g",
+  "energy": "878.64Kj",
+  "fat": "14.56g"
+},
+
+  "beet_salad": {
+  "protein": "1.8g",
+  "calories": "67Kcl",
+  "carbohydrate": "14g",
+  "energy": "280.3Kj",
+  "fat": "0.0g"
+},
+
+  "beignets": {
+  "protein": "8.0g",
+  "calories": "440Kcl",
+  "carbohydrate": "48g",
+  "energy": "1841.0Kj",
+  "fat": "28.0g"
+},
+
+  "bibimbap": {
+  "protein": "5.49g",
+  "calories": "80.25Kcl",
+  "carbohydrate": "8.64g",
+  "energy": "335.5Kj",
+  "fat": "2.90g"
+},
+
+  "bread_pudding": {
+  "protein": "5.27g",
+  "calories": "153Kcl",
+  "carbohydrate": "23.26g",
+  "energy": "640.15Kj",
+  "fat": "4.74g"
+},
+
+  "breakfast_burrito": {
+  "protein": "10.72g",
+  "calories": "202Kcl",
+  "carbohydrate": "11.89g",
+  "energy": "845.17Kj",
+  "fat": "12.3g"
+},
+"bruschetta": {
+  "protein": "4.2g",
+  "calories": "169Kcl",
+  "carbohydrate": "22.0g",
+  "energy": "709Kj",
+  "fat": "7.6g"
+},
+
+ "caesar_salad": {
+  "protein": "6.0g",
+  "calories": "152Kcl",
+  "carbohydrate": "9.0g",
+  "energy": "636Kj",
+  "fat": "9.6g"
+},
+"cannoli": {
+  "protein": "8.7g",
+  "calories": "254Kcl",
+  "carbohydrate": "28.8g",
+  "energy": "1064Kj",
+  "fat": "11.0g"
+},
+"caprese_salad": {
+  "protein": "10.5g",
+  "calories": "177Kcl",
+  "carbohydrate": "3.5g",
+  "energy": "741Kcl",
+  "fat": "13.7g"
+},
+"carrot_cake": {
+  "protein": "3.3g",
+  "calories": "478Kcl",
+  "carbohydrate": "53.3g",
+  "energy": "2002Kj",
+  "fat": "28.3g"
+},
+"ceviche": {
+  "protein": "11.5g",
+  "calories": "69Kcl",
+  "carbohydrate": "3.7g",
+  "energy": "289Kj",
+  "fat": "0.8g"
+},
+"cheesecake": {
+  "protein": "5.5g",
+  "calories": "321Kcl",
+  "carbohydrate": "25.5g",
+  "energy": "1343Kj",
+  "fat": "22.5g"
+}
+,
+  "cheese_plate": {
+  "protein": "20.0g",
+  "calories": "230Kcl",
+  "carbohydrate": "8.0g",
+  "energy": "962Kj",
+  "fat": "13.0g"
+},
+"chicken_curry": {
+  "protein": "6.7g",
+  "calories": "106Kcl",
+  "carbohydrate": "6.7g",
+  "energy": "444Kj",
+  "fat": "6.2g"
+},
+"chicken_quesadilla": {
+  "protein": "12.6g",
+  "calories": "316Kcl",
+  "carbohydrate": "29.5g",
+  "energy": "1322Kj",
+  "fat": "16.8g"
+},
+"chicken_wings": {
+  "protein": "14.3g",
+  "calories": "170Kcl",
+  "carbohydrate": "0.65g",
+  "energy": "711Kj",
+  "fat": "12.5g"
+},
+"chocolate_cake": {
+  "protein": "3.5g",
+  "calories": "435Kcl",
+  "carbohydrate": "63.5g",
+  "energy": "1820Kj",
+  "fat": "18.8g"
+},
+"chocolate_mousse": {
+  "protein": "4.7g",
+  "calories": "294Kcl",
+  "carbohydrate": "18.8g",
+  "energy": "1230Kj",
+  "fat": "22.4g"
+},
+"churros": {
+  "protein": "6.0g",
+  "calories": "420Kcl",
+  "carbohydrate": "48.7g",
+  "energy": "1757Kcl",
+  "fat": "22.0g"
+},
+"clam_chowder": {
+  "protein": "1.6g",
+  "calories": "82Kcl",
+  "carbohydrate": "8.2g",
+  "energy": "343Kj",
+  "fat": "4.9g"
+},
+"club_sandwich": {
+  "protein": "14.0g",
+  "calories": "243Kcl",
+  "carbohydrate": "20.2g",
+  "energy": "1017Kj",
+  "fat": "12.3g"
+}
+,
+  "crab_cakes": {
+  "protein": "17.8g",
+  "calories": "250Kcl",
+  "carbohydrate": "3.1g",
+  "energy": "1046Kj",
+  "fat": "18.0g"
+},
+"creme_brulee": {
+  "protein": "4.6g",
+  "calories": "330Kcl",
+  "carbohydrate": "29.9g",
+  "energy": "1380Kj",
+  "fat": "21.4g"
+},
+"croque_madame": {
+  "protein": "14.0g",
+  "calories": "300Kcl",
+  "carbohydrate": "20.0g",
+  "energy": "1255Kj",
+  "fat": "18.0g"
+},
+"cup_cakes": {
+  "protein": "4.2g",
+  "calories": "367Kcl",
+  "carbohydrate": "52.0g",
+  "energy": "1536Kj",
+  "fat": "16.1g"
+},
+"deviled_eggs": {
+  "protein": "13.0g",
+  "calories": "318Kcl",
+  "carbohydrate": "1.3g",
+  "energy": "1331Kj",
+  "fat": "27.0g"
+},
+"donuts": {
+  "protein": "4.9g",
+  "calories": "452Kcl",
+  "carbohydrate": "51.2g",
+  "energy": "1891Kj",
+  "fat": "25.2g"
+},
+"dumplings": {
+  "protein": "8.0g",
+  "calories": "221Kcl",
+  "carbohydrate": "26.2g",
+  "energy": "925Kj",
+  "fat": "8.8g"
+},
+"edamame": {
+  "protein": "11.9g",
+  "calories": "121Kcl",
+  "carbohydrate": "8.9g",
+  "energy": "506Kj",
+  "fat": "5.2g"
+},
+ 
+"garlic_bread": {
+  "protein": "7.8g",
+  "calories": "330Kcl",
+  "carbohydrate": "45.6g",
+  "energy": "1381Kj",
+  "fat": "12.8g"
+},
+"gnocchi": {
+  "protein": "4.0g",
+  "calories": "149Kcl",
+  "carbohydrate": "29.2g",
+  "energy": "623Kj",
+  "fat": "1.3g"
+},
+"greek_salad": {
+  "protein": "2.5g",
+  "calories": "104Kcl",
+  "carbohydrate": "6.0g",
+  "energy": "435Kj",
+  "fat": "7.0g"
+},
+"grilled_cheese_sandwich": {
+  "protein": "12.0g",
+  "calories": "280Kcl",
+  "carbohydrate": "28.0g",
+  "energy": "1171Kj",
+  "fat": "12.0g"
+},
+"grilled_salmon": {
+  "protein": "22.1g",
+  "calories": "206Kcl",
+  "carbohydrate": "0.0g",
+  "energy": "862Kj",
+  "fat": "13.4g"
+},
+"guacamole": {
+  "protein": "2.0g",
+  "calories": "160Kcl",
+  "carbohydrate": "8.5g",
+  "energy": "670Kj",
+  "fat": "15.0g"
+},
+"gyoza": {
+  "protein": "6.4g",
+  "calories": "168Kcl",
+  "carbohydrate": "19.2g",
+  "energy": "703Kj",
+  "fat": "7.5g"
+},
+"hamburger": {
+  "protein": "15.5g",
+  "calories": "255Kcl",
+  "carbohydrate": "26.9g",
+  "energy": "1067Kj",
+  "fat": "11.1g"
+},
+"hot_and_sour_soup": {
+  "protein": "2.1g",
+  "calories": "45Kcl",
+  "carbohydrate": "5.5g",
+  "energy": "188Kj",
+  "fat": "1.0g"
+},
+"hot_dog": {
+  "protein": "10.5g",
+  "calories": "290Kcl",
+  "carbohydrate": "0.5g",
+  "energy": "1213Kj",
+  "fat": "25.0g"
+},
+"huevos_rancheros": {
+  "protein": "7.7g",
+  "calories": "145Kcl",
+  "carbohydrate": "8.6g",
+  "energy": "606Kj",
+  "fat": "8.2g"
+},
+"hummus": {
+  "protein": "7.9g",
+  "calories": "166Kcl",
+  "carbohydrate": "14.3g",
+  "energy": "694Kj",
+  "fat": "9.6g"
+},
+"ice_cream": {
+  "protein": "3.5g",
+  "calories": "207Kcl",
+  "carbohydrate": "24.0g",
+  "energy": "867Kj",
+  "fat": "11.0g"
+},
+"lasagna": {
+  "protein": "7.3g",
+  "calories": "134Kcl",
+  "carbohydrate": "10.8g",
+  "energy": "561Kj",
+  "fat": "6.9g"
+},
+"lobster_bisque": {
+  "protein": "8.0g",
+  "calories": "120Kcl",
+  "carbohydrate": "9.0g",
+  "energy": "502Kj",
+  "fat": "6.5g"
+},
+"lobster_roll_sandwich": {
+  "protein": "12.0g",
+  "calories": "255Kcl",
+  "carbohydrate": "18.0g",
+  "energy": "1069Kj",
+  "fat": "14.5g"
+},
+"macaroni_and_cheese": {
+  "protein": "6.6g",
+  "calories": "164Kcl",
+  "carbohydrate": "24.1g",
+  "energy": "686Kj",
+  "fat": "6.2g"
+},
+"macarons": {
+  "protein": "6.0g",
+  "calories": "460Kcl",
+  "carbohydrate": "57.0g",
+  "energy": "1925Kj",
+  "fat": "24.0g"
+},
+"miso_soup": {
+  "protein": "2.5g",
+  "calories": "40Kcl",
+  "carbohydrate": "5.0g",
+  "energy": "167Kj",
+  "fat": "1.0g"
+},
+"mussels": {
+  "protein": "12.0g",
+  "calories": "86Kcl",
+  "carbohydrate": "3.7g",
+  "energy": "360Kj",
+  "fat": "2.2g"
+},
+"nachos": {
+  "protein": "7.0g",
+  "calories": "549Kcl",
+  "carbohydrate": "50.3g",
+  "energy": "2298Kj",
+  "fat": "34.8g"
+},
+"omelette": {
+  "protein": "10.8g",
+  "calories": "154Kcl",
+  "carbohydrate": "1.6g",
+  "energy": "645Kj",
+  "fat": "11.3g"
+},
+"onion_rings": {
+  "protein": "4.5g",
+  "calories": "411Kcl",
+  "carbohydrate": "50.1g",
+  "energy": "1719Kj",
+  "fat": "23.0g"
+},
+"oysters": {
+  "protein": "7.0g",
+  "calories": "68Kcl",
+  "carbohydrate": "3.9g",
+  "energy": "285Kj",
+  "fat": "2.5g"
+},
+"pad_thai": {
+  "protein": "9.0g",
+  "calories": "400Kcl",
+  "carbohydrate": "54.0g",
+  "energy": "1674Kj",
+  "fat": "14.0g"
+},
+"paella": {
+  "protein": "6.0g",
+  "calories": "130Kcl",
+  "carbohydrate": "18.0g",
+  "energy": "544Kj",
+  "fat": "3.8g"
+},
+"pancakes": {
+  "protein": "6.0g",
+  "calories": "227Kcl",
+  "carbohydrate": "36.0g",
+  "energy": "950Kj",
+  "fat": "6.0g"
+},
+"panna_cotta": {
+  "protein": "3.2g",
+  "calories": "233Kcl",
+  "carbohydrate": "26.0g",
+  "energy": "975Kj",
+  "fat": "12.0g"
+},
+"peking_duck": {
+  "protein": "19.0g",
+  "calories": "337Kcl",
+  "carbohydrate": "0.0g",
+  "energy": "1410Kj",
+  "fat": "28.0g"
+},
+"pho": {
+  "protein": "2.7g",
+  "calories": "39Kcl",
+  "carbohydrate": "5.0g",
+  "energy": "163Kj",
+  "fat": "1.6g"
+},
+"pizza": {
+  "protein": "11.0g",
+  "calories": "266Kcl",
+  "carbohydrate": "33.0g",
+  "energy": "1113Kj",
+  "fat": "10.0g"
+},
+"pork_chop": {
+  "protein": "25.6g",
+  "calories": "231Kcl",
+  "carbohydrate": "0.0g",
+  "energy": "967Kj",
+  "fat": "14.0g"
+},
+"poutine": {
+  "protein": "8.6g",
+  "calories": "471Kcl",
+  "carbohydrate": "49.7g",
+  "energy": "1969Kj",
+  "fat": "26.4g"
+},
+"prime_rib": {
+  "protein": "22.0g",
+  "calories": "325Kcl",
+  "carbohydrate": "0.0g",
+  "energy": "1360Kj",
+  "fat": "26.0g"
+},
+"pulled_pork_sandwich": {
+  "protein": "10.0g",
+  "calories": "193Kcl",
+  "carbohydrate": "22.0g",
+  "energy": "807Kj",
+  "fat": "7.0g"
+},
+"ramen": {
+  "protein": "9.6g",
+  "calories": "436Kcl",
+  "carbohydrate": "57.5g",
+  "energy": "1822Kj",
+  "fat": "17.5g"
+},
+"ravioli": {
+  "protein": "5.0g",
+  "calories": "149Kcl",
+  "carbohydrate": "25.0g",
+  "energy": "623Kj",
+  "fat": "3.8g"
+},
+"red_velvet_cake": {
+  "protein": "4.5g",
+  "calories": "350Kcl",
+  "carbohydrate": "47.0g",
+  "energy": "1464Kj",
+  "fat": "16.0g"
+},
+"risotto": {
+  "protein": "3.0g",
+  "calories": "130Kcl",
+  "carbohydrate": "22.0g",
+  "energy": "544Kj",
+  "fat": "3.5g"
+},
+"samosa": {
+  "protein": "4.8g",
+  "calories": "262Kcl",
+  "carbohydrate": "29.0g",
+  "energy": "1096Kj",
+  "fat": "14.0g"
+},
+"sashimi": {
+  "protein": "23.0g",
+  "calories": "125Kcl",
+  "carbohydrate": "0.0g",
+  "energy": "523Kj",
+  "fat": "2.0g"
+},
+"scallops": {
+  "protein": "16.0g",
+  "calories": "88Kcl",
+  "carbohydrate": "5.5g",
+  "energy": "368Kj",
+  "fat": "0.8g"
+},
+"seaweed_salad": {
+  "protein": "1.8g",
+  "calories": "70Kcl",
+  "carbohydrate": "9.5g",
+  "energy": "293Kj",
+  "fat": "0.5g"
+},
+"shrimp_and_grits": {
+  "protein": "7.0g",
+  "calories": "125Kcl",
+  "carbohydrate": "11.0g",
+  "energy": "523Kj",
+  "fat": "4.0g"
+},
+"spaghetti_bolognese": {
+  "protein": "7.0g",
+  "calories": "158Kcl",
+  "carbohydrate": "17.0g",
+  "energy": "661Kj",
+  "fat": "6.5g"
+},
+"spaghetti_carbonara": {
+  "protein": "7.5g",
+  "calories": "250Kcl",
+  "carbohydrate": "29.0g",
+  "energy": "1046Kj",
+  "fat": "12.5g"
+},
+"spring_rolls": {
+  "protein": "6.6g",
+  "calories": "175Kcl",
+  "carbohydrate": "18.4g",
+  "energy": "732Kj",
+  "fat": "8.2g"
+},
+"steak": {
+  "protein": "25.0g",
+  "calories": "271Kcl",
+  "carbohydrate": "0.45g",
+  "energy": "1133Kj",
+  "fat": "19.0g"
+},
+"strawberry_shortcake": {
+  "protein": "3.8g",
+  "calories": "308Kcl",
+  "carbohydrate": "49.0g",
+  "energy": "1290Kj",
+  "fat": "9.0g"
+},
+"sushi": {
+  "protein": "2.0g",
+  "calories": "130Kcl",
+  "carbohydrate": "28.0g",
+  "energy": "544Kj",
+  "fat": "1.5g"
+},
+"tacos": {
+  "protein": "8.0g",
+  "calories": "226Kcl",
+  "carbohydrate": "26.0g",
+  "energy": "946Kj",
+  "fat": "10.0g"
+},
+"takoyaki": {
+  "protein": "9.0g",
+  "calories": "168Kcl",
+  "carbohydrate": "12.0g",
+  "energy": "703Kj",
+  "fat": "10.0g"
+},
+"tiramisu": {
+  "protein": "5.0g",
+  "calories": "240Kcl",
+  "carbohydrate": "28.0g",
+  "energy": "1004Kj",
+  "fat": "14.0g"
+},
+"tuna_tartare": {
+  "protein": "18.0g",
+  "calories": "134Kcl",
+  "carbohydrate": "4.0g",
+  "energy": "561Kj",
+  "fat": "6.0g"
+},
+"waffles": {
+  "protein": "8.3g",
+  "calories": "291Kcl",
+  "carbohydrate": "41.4g",
+  "energy": "1217Kj",
+  "fat": "8.6g"
+}
+
+
+}
