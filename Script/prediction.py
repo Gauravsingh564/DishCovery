@@ -1,4 +1,5 @@
 import argparse
+import json
 import torch
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -16,41 +17,63 @@ def predict_image(model, transform, image_path, device):
     return img, pred.item(), conf.item()
 
 def main():
-    parser = argparse.ArgumentParser(description="Predict class for a single image")
-    parser.add_argument("--model-path", type=str, required=True, help="Path to saved model .pth file")
-    parser.add_argument("--image-path", type=str, required=True, help="Path to input image file")
-    parser.add_argument("--classes-file", type=str, required=True, help="Path to classes txt (one per line)")
-    parser.add_argument("--threshold", type=float, default=0.2, help="Confidence threshold")
+    parser = argparse.ArgumentParser(description="Predict class for a single image and show nutrition info")
+    parser.add_argument("--model-path",    type=str,   required=True, help="Path to saved model .pth file")
+    parser.add_argument("--image-path",    type=str,   required=True, help="Path to input image file")
+    parser.add_argument("--classes-file",  type=str,   required=True, help="Path to classes txt (one per line)")
+    parser.add_argument("--nutrition-file",type=str,   required=True, help="Path to classes_nutrition.json")
+    parser.add_argument("--threshold",     type=float, default=0.2,    help="Confidence threshold")
     args = parser.parse_args()
 
+    # load class names
     with open(args.classes_file) as f:
-        class_names = [line.strip() for line in f.readlines()]
+        class_names = [line.strip() for line in f if line.strip()]
+
+    # load nutrition data
+    with open(args.nutrition_file) as j:
+        nutrition_data = json.load(j)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    # build & load model
     model = get_model(num_classes=len(class_names)).to(device)
     state = torch.load(args.model_path, map_location=device)
     model.load_state_dict(state)
 
-    weights = Swin_B_Weights.DEFAULT
+    # get transforms
+    weights   = Swin_B_Weights.DEFAULT
     transform = weights.transforms()
 
+    # predict
     img, pred_idx, conf = predict_image(model, transform, args.image_path, device)
-    pred_label = class_names[pred_idx]
+    pred_label = class_names[pred_idx].lower()
 
-    plt.imshow(img)
-    title = f"{pred_label} ({conf*100:.2f}%)"
-    if conf < args.threshold or pred_label.lower() == "nofood":
-        title = "NoFood"
-        plt.title(title)
-        plt.axis('off')
-        plt.show()
-        print("No Food found in this image please upload appropriate image..")
+    # show image with title only
+    fig, ax = plt.subplots(figsize=(6,6))
+    ax.imshow(img)
+    ax.axis("off")
+
+    if conf < args.threshold or pred_label == "nofood":
+        title = "No Food"
     else:
-        plt.title(title)
-        plt.axis('off')
-        plt.show()
-        print(title)
+        title = f"{pred_label} ({conf*100:.1f}%)"
+    ax.set_title(title)
+    plt.tight_layout()
+    plt.show()
+
+    # console output
+    print(title)
+    if conf < args.threshold or pred_label == "nofood":
+        print("No food found in this image, please upload an appropriate image.")
+        return
+
+    info = nutrition_data.get(pred_label)
+    if info:
+        print("\nNutrition per 100 g:")
+        for nutrient, val in info.items():
+            print(f"  {nutrient.capitalize():12s}: {val}")
+    else:
+        print("Nutrition info not found for:", pred_label)
 
 if __name__ == "__main__":
     main()
