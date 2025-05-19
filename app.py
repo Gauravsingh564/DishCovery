@@ -33,8 +33,21 @@ st.set_page_config(
     # layout="centered"
 )
 
-# call background injection *after* config, before any UI components
+# ─── 2) Inject background ────────────────────────────────────────────────────
 set_background("background.png")
+
+# ─── 3) Force all text to black ───────────────────────────────────────────────
+st.markdown(
+    """
+    <style>
+      /* make every Streamlit-rendered text element black */
+      .stApp * {
+        color: #000000 !important;
+      }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 BASE       = os.path.dirname(__file__)
 CLASS_FILE = os.path.join(BASE, "meta", "classes.txt")
@@ -82,7 +95,7 @@ def load_model_and_data():
     return model, device, class_names, nutrition_data
 
 def main():
-    # ─── 2) Header with logo + title ────────────────────────────────────────────
+    # ─── 4) Header with logo + title ────────────────────────────────────────────
     col1, col2 = st.columns([1, 8])
     with col1:
         st.image("logo.png", width=60)
