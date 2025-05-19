@@ -52,7 +52,7 @@ set_background("background.jpg")
 BASE       = os.path.dirname(__file__)
 CLASS_FILE = os.path.join(BASE, "meta", "classes.txt")
 NUT_FILE   = os.path.join(BASE, "meta", "classes_nutrition.json")
-threshold  = 20
+threshold  = 58
 
 @st.cache_data
 def fetch_weights(drive_id: str, dst: str = "model.pth"):
