@@ -69,7 +69,7 @@ def main():
     uploaded = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
     if uploaded:
         image = Image.open(uploaded).convert("RGB")
-        st.image(image, caption="Uploaded Image", use_column_width=True)
+        st.image(image, caption="Uploaded Image", use_container_width=True)
 
         model, device, class_names, nutrition_data = load_model_and_data()
 
@@ -96,4 +96,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
