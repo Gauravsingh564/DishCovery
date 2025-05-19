@@ -9,7 +9,7 @@ from Script.prediction import load_model, predict_image
 # ─── 1) Set page config with favicon ──────────────────────────────────────────
 st.set_page_config(
     page_title="DishCovery",
-    page_icon="logo.jpg",    # (this appears in the browser tab)
+    page_icon="logo.png",    # (this appears in the browser tab)
     # layout="wide"            # allow us to use wider columns
 )
 
@@ -70,7 +70,7 @@ def main():
     # ─── 2) Header with logo + title ────────────────────────────────────────────
     col1, col2 = st.columns([1, 8])
     with col1:
-        st.image("logo.jpg", width=60)       # your logo file here
+        st.image("logo.png", width=60)       # your logo file here
     with col2:
         st.title("🍽️ DishCovery")
 
@@ -98,7 +98,7 @@ def main():
 
         # Display nutrition info
         if label in nutrition_data:
-            st.subheader("Nutritional Information per 100 g")
+            st.subheader("Nutritional Information per 100 gm")
             info = nutrition_data[label]
             st.write(f"- **Calories:**       {info.get('calories', 'N/A')}")
             st.write(f"- **Protein:**        {info.get('protein', 'N/A')}")
