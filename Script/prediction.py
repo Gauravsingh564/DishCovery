@@ -6,7 +6,7 @@ import gdown
 from PIL import Image
 import matplotlib.pyplot as plt
 from torchvision.models import Swin_B_Weights
-from model_builder import get_model
+from Script.model_builder import get_model
 
 
 def fetch_weights(drive_id: str, dst: str = "model.pth"):
