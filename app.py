@@ -42,7 +42,7 @@ def load_model_and_data():
         st.stop()
 
     # Load model
-    model = load_model(model_path="model.pth", classes_file=CLASS_FILE)
+    model, _ = load_model(model_path="model.pth", classes_file=CLASS_FILE)
     if model is None:
         st.error("Model could not be loaded. Check the model path or loading logic.")
         st.stop()
@@ -96,3 +96,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
