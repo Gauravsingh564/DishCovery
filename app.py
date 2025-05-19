@@ -37,12 +37,12 @@ def load_model_and_data():
     model.to(device)
 
     # Load class names
-   with open(CLASS_FILE) as f:
-    class_names = [line.strip() for line in f if line.strip()]
+    with open(CLASS_FILE) as f:
+     class_names = [line.strip() for line in f if line.strip()]
 
     # Load nutrition data from JSON
-   with open(NUT_FILE) as f:
-    nutrition_data = json.load(f)
+    with open(NUT_FILE) as f:
+     nutrition_data = json.load(f)
 
     return model, device, class_names, nutrition_data
 
