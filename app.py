@@ -77,7 +77,7 @@ def main():
         # Show warning if no food detected
         if confidence <= threshold or label.lower() == "nofood":
             st.warning("No food detected in the image. Please upload an appropriate dish image.")
-            st.image(image, use_column_width=True)
+            # st.image(image, use_column_width=True)
         else:
             st.success(f"Prediction: {label} ({confidence:.2f}%)")
 
