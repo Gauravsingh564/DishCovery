@@ -6,6 +6,11 @@ import torch
 import json
 from Script.prediction import load_model, predict_image  # assumes load_model reads model.pth from cwd
 
+import os
+BASE = os.path.dirname(__file__)            # the folder where app.py lives
+CLASS_FILE = os.path.join(BASE, "meta", "classes.txt")
+NUT_FILE   = os.path.join(BASE, "meta", "classes_nutrition.json")
+
 # Cache downloads and model loading to speed up repeated inference
 @st.cache(allow_output_mutation=True)
 def fetch_weights(drive_id: str, dst: str = "model.pth"):
@@ -32,12 +37,12 @@ def load_model_and_data():
     model.to(device)
 
     # Load class names
-    with open("classes.txt") as f:
-        class_names = [line.strip() for line in f if line.strip()]
+   with open(CLASS_FILE) as f:
+    class_names = [line.strip() for line in f if line.strip()]
 
     # Load nutrition data from JSON
-    with open("classes_nutrition.json") as f:
-        nutrition_data = json.load(f)
+   with open(NUT_FILE) as f:
+    nutrition_data = json.load(f)
 
     return model, device, class_names, nutrition_data
 
