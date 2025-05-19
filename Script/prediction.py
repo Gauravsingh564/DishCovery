@@ -81,7 +81,7 @@ def main():
                         help="Path to classes_nutrition.json file")
     parser.add_argument("--image-path", type=str, required=True,
                         help="Path to the input image file")
-    parser.add_argument("--threshold", type=float, default=0.58,
+    parser.add_argument("--threshold", type=float, default=0.6,
                         help="Confidence threshold (0-1) below which output 'No Food'")
     args = parser.parse_args()
 
