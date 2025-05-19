@@ -15,16 +15,15 @@ def fetch_weights(drive_id: str, dst: str = "model.pth"):
     `drive_id` is the file ID from your Drive share link.
     """
     if not os.path.exists(dst):
-        url = f"https://drive.google.com/file/d/1Sh447_nPFg8WMIzX9k2ryQXZhbqEU42C/view?usp=sharing={drive_id}"
+        url = f"https://drive.google.com/uc?id={drive_id}"
         gdown.download(url, dst, quiet=False)
     return dst
 
 
 def load_model(model_path: str = "model.pth", classes_file: str = None):
     """
-    Builds the model based on `classes_file` and loads weights from `model_path`.
-    If `classes_file` is None, defaults to meta/classes.txt next to this script.
-    Returns a torch.nn.Module ready for inference.
+    Builds and returns the model loaded with weights from `model_path`.
+    Classifier head size is inferred from `classes_file`, defaulting to meta/classes.txt.
     """
     # Determine the classes file location
     if classes_file is None:
@@ -39,8 +38,8 @@ def load_model(model_path: str = "model.pth", classes_file: str = None):
     # Initialize model architecture
     model = get_model(num_classes=num_classes)
 
-    # Load weights
-    state = torch.load(model_path, map_location="cpu")
+    # Load weights (set weights_only=False to unpickle custom objects)
+    state = torch.load(model_path, map_location="cpu", weights_only=False)
     model.load_state_dict(state)
     return model, class_names
 
