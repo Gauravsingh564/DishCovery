@@ -62,7 +62,7 @@ def load_model_and_data():
     return model, device, class_names, nutrition_data
 
 def main():
-    st.title("🍽️ Food Classifier & Nutrition Facts")
+    st.title("🍽️ DishCovery")
     st.write(
         "Upload an image of a dish, and get its predicted label along with nutritional information."
     )
