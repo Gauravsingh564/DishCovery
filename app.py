@@ -9,7 +9,7 @@ from Script.prediction import load_model, predict_image
 # ─── 1) Set page config with favicon ──────────────────────────────────────────
 st.set_page_config(
     page_title="DishCovery",
-    page_icon="logo.png",    # (this appears in the browser tab)
+    page_icon="logo.jpg",    # (this appears in the browser tab)
     layout="wide"            # allow us to use wider columns
 )
 
