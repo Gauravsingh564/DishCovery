@@ -36,100 +36,70 @@ def load_model(model_path: str = "model.pth", classes_file: str = None):
     Builds and returns the model loaded with weights from `model_path`.
     Classifier head size is inferred from `classes_file`, defaulting to meta/classes.txt.
     """
-    # Determine the classes file location
     if classes_file is None:
         base = os.path.dirname(__file__)
         classes_file = os.path.join(base, "meta", "classes.txt")
-
-    # Read class labels
     with open(classes_file) as f:
         class_names = [line.strip() for line in f if line.strip()]
     num_classes = len(class_names)
-
-    # Initialize model architecture
     model = get_model(num_classes=num_classes)
-
-    # Load weights (set weights_only=False to unpickle custom objects)
     state = torch.load(model_path, map_location="cpu", weights_only=False)
     model.load_state_dict(state)
-    return model, class_names
+    return model
 
 
 def predict_image(model, device, img: Image.Image):
     """
-    Predicts the class index and confidence (0–1) from a PIL Image.
-    Returns (pred_idx, confidence).
+    Predicts the class label and confidence percentage from a PIL Image.
+    Returns (pred_label, confidence_percent).
     """
-    # Preprocessing from pretrained weights
     weights = Swin_B_Weights.DEFAULT
     transform = weights.transforms()
-
     x = transform(img).unsqueeze(0).to(device)
     model.to(device).eval()
     with torch.no_grad():
         logits = model(x)
         probs = torch.softmax(logits, dim=1)
-        conf_tensor, pred_idx = torch.max(probs, dim=1)
-    return pred_idx.item(), conf_tensor.item()
+        conf, idx = torch.max(probs, dim=1)
+    return idx.item(), conf.item()
 
 
 def main():
     parser = argparse.ArgumentParser(
         description="Predict class for an image (fetching model from Drive if needed)"
     )
-    parser.add_argument(
-        "--drive-id", type=str, default=None,
-        help="Google Drive file ID for model weights (optional)"
-    )
-    parser.add_argument(
-        "--model-path", type=str, default="model.pth",
-        help="Local path to model weights (.pth)"
-    )
-    parser.add_argument(
-        "--classes-file", type=str, default=None,
-        help="Path to classes txt (one per line)"
-    )
-    parser.add_argument(
-        "--nutrition-file", type=str, default=None,
-        help="Path to classes_nutrition.json"
-    )
-    parser.add_argument(
-        "--image-path", type=str, required=True,
-        help="Path to input image file"
-    )
-    parser.add_argument(
-        "--threshold", type=float, default=0.2,
-        help="Confidence threshold (0-1) below which treat as no food"
-    )
+    parser.add_argument("--drive-id", type=str, default=None,
+                        help="Google Drive file ID or shareable URL for model weights")
+    parser.add_argument("--model-path", type=str, default="model.pth",
+                        help="Local path to model weights (.pth)")
+    parser.add_argument("--classes-file", type=str, default=None,
+                        help="Path to classes txt (one per line)")
+    parser.add_argument("--nutrition-file", type=str, default=None,
+                        help="Path to classes_nutrition.json")
+    parser.add_argument("--image-path", type=str, required=True,
+                        help="Path to input image file")
+    parser.add_argument("--threshold", type=float, default=0.2,
+                        help="Confidence threshold (0-1) below which treat as no food")
     args = parser.parse_args()
 
-    # Fetch weights if drive_id provided
     if args.drive_id:
         fetch_weights(args.drive_id, dst=args.model_path)
-
-    # Determine metadata paths
     base = os.path.dirname(__file__)
     classes_file = args.classes_file or os.path.join(base, "meta", "classes.txt")
     nutrition_file = args.nutrition_file or os.path.join(base, "meta", "classes_nutrition.json")
 
-    # Load model and class names
     model, class_names = load_model(model_path=args.model_path, classes_file=classes_file)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
-    # Load nutrition data
     with open(nutrition_file) as j:
         nutrition_data = json.load(j)
 
-    # Load and preprocess image
     img = Image.open(args.image_path).convert("RGB")
-
-    # Predict
     pred_idx, conf = predict_image(model, device, img)
     label = class_names[pred_idx]
     confidence = conf * 100
 
-    # Display image with prediction
     fig, ax = plt.subplots(figsize=(6,6))
     ax.imshow(img)
     ax.axis("off")
@@ -141,21 +111,18 @@ def main():
     plt.tight_layout()
     plt.show()
 
-    # Console output
     print(title)
     if conf < args.threshold or label.lower() == "nofood":
         print("No food found in this image, please upload an appropriate image.")
         return
 
-    # Display nutrition info
-    info = nutrition_data.get(label.lower(), None)
+    info = nutrition_data.get(label.lower())
     if info:
         print("\nNutrition per 100 g:")
         for nutrient, val in info.items():
             print(f"  {nutrient.capitalize():12}: {val}")
     else:
         print("Nutrition info not found for:", label)
-
 
 if __name__ == "__main__":
     main()
