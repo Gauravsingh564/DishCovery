@@ -122,7 +122,7 @@ def main():
     else:
         st.success(f"Prediction: {label} ({confidence:.2f}%)")
         if label in nutrition_data:
-            st.subheader("Nutritional Information per 100 g")
+            st.subheader("Nutritional Information per 100 gm")
             info = nutrition_data[label]
             st.write(f"- **Calories:**       {info.get('calories', 'N/A')}")
             st.write(f"- **Protein:**        {info.get('protein', 'N/A')}")
