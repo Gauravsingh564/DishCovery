@@ -7,6 +7,26 @@ import torch
 import json
 from Script.prediction import load_model, predict_image
 
+# ─── 1) Page config ───────────────────────────────────────────────────────────
+st.set_page_config(
+    page_title="DishCovery",
+    page_icon="logo.png",
+    # layout="centered"
+)
+
+# ─── 1a) Force all text to black via global CSS override ──────────────────────
+st.markdown(
+    """
+    <style>
+      /* apply black color to every element */
+      .stApp, .stApp * {
+        color: #000000 !important;
+      }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 # ─── 0) Background setup ──────────────────────────────────────────────────────
 def set_background(png_file: str):
     """Inject a base64‐encoded background image via CSS."""
@@ -25,13 +45,6 @@ def set_background(png_file: str):
         """,
         unsafe_allow_html=True,
     )
-
-# ─── 1) Page config ───────────────────────────────────────────────────────────
-st.set_page_config(
-    page_title="DishCovery",
-    page_icon="logo.png",
-    # layout="centered"
-)
 
 # call background injection *after* config, before any UI components
 set_background("background.jpg")
