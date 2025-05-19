@@ -70,7 +70,7 @@ def main():
     # ─── 2) Header with logo + title ────────────────────────────────────────────
     col1, col2 = st.columns([1, 8])
     with col1:
-        st.image("logo.png", width=60)       # your logo file here
+        st.image("logo.jpg", width=60)       # your logo file here
     with col2:
         st.title("🍽️ DishCovery")
 
