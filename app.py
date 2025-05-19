@@ -1,12 +1,32 @@
+import os
 import streamlit as st
 from PIL import Image
+import gdown
 import torch
 import json
-from prediction import load_model, predict_image  # assumes predict_image now accepts a PIL Image
+from prediction import load_model, predict_image  # assumes load_model reads model.pth from cwd
 
-# Cache model and data loading to speed up repeated inference
+# Cache downloads and model loading to speed up repeated inference
+@st.cache(allow_output_mutation=True)
+def fetch_weights(drive_id: str, dst: str = "model.pth"):
+    """
+    Download model weights from Google Drive using gdown if not already present.
+    """
+    if not os.path.exists(dst):
+        url = f"https://drive.google.com/file/d/1Sh447_nPFg8WMIzX9k2ryQXZhbqEU42C/view?usp=sharing={drive_id}"
+        gdown.download(url, dst, quiet=False)
+    return dst
+
 @st.cache(allow_output_mutation=True)
 def load_model_and_data():
+    # Download model weights
+    drive_id = st.secrets.get("drive_model_id")
+    if not drive_id:
+        st.error("Model Drive ID not found in secrets. Please set 'drive_model_id'.")
+        st.stop()
+    fetch_weights(drive_id)
+
+    # Load model (prediction.load_model should load from local 'model.pth')
     model = load_model()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
@@ -28,7 +48,7 @@ def main():
         "Upload an image of a dish, and get its predicted label along with nutritional information."
     )
 
-    # Allow user to adjust the confidence threshold for no-food detection
+    # Confidence threshold slider
     threshold = st.sidebar.slider(
         "Confidence threshold (%) for detecting food",
         min_value=0,
@@ -43,17 +63,17 @@ def main():
 
         model, device, class_names, nutrition_data = load_model_and_data()
 
-        # Predict label and confidence directly from PIL Image
+        # Predict label and confidence from PIL Image
         label, confidence = predict_image(model, device, image, class_names)
 
-        # If confidence is below threshold or explicitly 'nofood', show warning
+        # Show warning if no food detected
         if confidence <= threshold or label.lower() == "nofood":
             st.warning("No food detected in the image. Please upload an appropriate dish image.")
             st.image(image, use_column_width=True)
         else:
             st.success(f"Prediction: {label} ({confidence:.2f}%)")
 
-            # Show nutrition info if available
+            # Display nutrition info
             if label in nutrition_data:
                 st.subheader("Nutritional Information")
                 info = nutrition_data[label]
