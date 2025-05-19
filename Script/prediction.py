@@ -12,10 +12,21 @@ from Script.model_builder import get_model
 def fetch_weights(drive_id: str, dst: str = "model.pth"):
     """
     Download model weights from Google Drive to `dst` if not already present.
-    `drive_id` is the file ID from your Drive share link.
+    `drive_id` can be either:
+      - a file ID (the alphanumeric part from share link)
+      - a full shareable URL (https://drive.google.com/file/d/.../view?usp=sharing)
     """
     if not os.path.exists(dst):
-        url = f"https://drive.google.com/file/d/1Sh447_nPFg8WMIzX9k2ryQXZhbqEU42C/view?usp=sharing={drive_id}"
+        # Determine download URL
+        if drive_id.startswith("http"):
+            # Convert share URL to direct download
+            url = drive_id
+            # If it ends with /view?usp=sharing, switch to export=download
+            if "/view" in url:
+                url = url.split("/view")[0] + "/uc?export=download"
+        else:
+            # drive_id is raw ID
+            url = f"https://drive.google.com/uc?export=download&id={drive_id}"
         gdown.download(url, dst, quiet=False)
     return dst
 
