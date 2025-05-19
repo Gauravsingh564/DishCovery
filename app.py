@@ -4,7 +4,7 @@ from PIL import Image
 import gdown
 import torch
 import json
-from prediction import load_model, predict_image  # assumes load_model reads model.pth from cwd
+from Script.prediction import load_model, predict_image  # assumes load_model reads model.pth from cwd
 
 # Cache downloads and model loading to speed up repeated inference
 @st.cache(allow_output_mutation=True)
