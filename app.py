@@ -72,7 +72,7 @@ def main():
     with col1:
         st.image("logo.png", width=60)       # your logo file here
     with col2:
-        st.title("🍽️ DishCovery")
+        st.title("DishCovery")
 
     st.write(
         "Upload an image of a dish, and get its predicted label along with nutritional information."
