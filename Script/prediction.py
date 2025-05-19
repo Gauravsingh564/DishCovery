@@ -1,25 +1,38 @@
+import os
 import argparse
 import json
 import torch
+import gdown
 from PIL import Image
 import matplotlib.pyplot as plt
 from torchvision.models import Swin_B_Weights
 from model_builder import get_model
 
 
-def load_model():
+def fetch_weights(drive_id: str, dst: str = "model.pth"):
     """
-    Builds the model architecture based on the number of classes in classes.txt
-    and loads weights from "model.pth" in the current working directory.
+    Download model weights from Google Drive to `dst` if not already present.
+    `drive_id` is the file ID from your Drive share link.
     """
-    # Read class names to determine num_classes
-    with open("classes.txt") as f:
+    if not os.path.exists(dst):
+        url = f"https://drive.google.com/file/d/1Sh447_nPFg8WMIzX9k2ryQXZhbqEU42C/view?usp=drive_link={drive_id}"
+        gdown.download(url, dst, quiet=False)
+    return dst
+
+
+def load_model(model_path: str = "model.pth", classes_file: str = "classes.txt"):
+    """
+    Builds the model based on the number of classes in `classes_file`
+    and loads weights from `model_path`.
+    """
+    # Determine number of classes
+    with open(classes_file) as f:
         class_names = [line.strip() for line in f if line.strip()]
     num_classes = len(class_names)
 
-    # Initialize and load model
+    # Initialize and load weights
     model = get_model(num_classes=num_classes)
-    state = torch.load("model.pth", map_location="cpu")
+    state = torch.load(model_path, map_location="cpu")
     model.load_state_dict(state)
     return model
 
@@ -27,40 +40,39 @@ def load_model():
 def predict_image(model, device, img: Image.Image):
     """
     Predicts the class index and confidence (0–1) from a PIL Image.
+    Returns (pred_idx, confidence).
     """
-    # Preprocessing from the pretrained weights
+    # Preprocessing from pretrained weights
     weights = Swin_B_Weights.DEFAULT
     transform = weights.transforms()
 
-    # Prepare input batch
     x = transform(img).unsqueeze(0).to(device)
     model.to(device).eval()
     with torch.no_grad():
         logits = model(x)
         probs = torch.softmax(logits, dim=1)
         conf_tensor, pred_idx = torch.max(probs, dim=1)
-
     return pred_idx.item(), conf_tensor.item()
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Predict class for a single image and show nutrition info"
+        description="Predict class for an image (fetching model from Drive if needed)"
     )
     parser.add_argument(
-        "--model-path", type=str, required=False,
-        help="(unused) Path to saved model .pth file, defaults to 'model.pth'"
+        "--drive-id", type=str, default=None,
+        help="Google Drive file ID for model weights (optional)"
     )
     parser.add_argument(
-        "--image-path", type=str, required=True,
-        help="Path to input image file"
+        "--model-path", type=str, default="model.pth",
+        help="Local path to model weights (.pth)"
     )
     parser.add_argument(
-        "--classes-file", type=str, required=True,
+        "--classes-file", type=str, default="classes.txt",
         help="Path to classes txt (one per line)"
     )
     parser.add_argument(
-        "--nutrition-file", type=str, required=True,
+        "--nutrition-file", type=str, default="classes_nutrition.json",
         help="Path to classes_nutrition.json"
     )
     parser.add_argument(
@@ -69,7 +81,11 @@ def main():
     )
     args = parser.parse_args()
 
-    # Load metadata files
+    # Optionally fetch weights from Drive
+    if args.drive_id:
+        fetch_weights(args.drive_id, dst=args.model_path)
+
+    # Load metadata
     with open(args.classes_file) as f:
         class_names = [line.strip() for line in f if line.strip()]
     with open(args.nutrition_file) as j:
@@ -78,11 +94,11 @@ def main():
     # Device setup
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # Load model (ignores --model-path, always uses 'model.pth')
-    model = load_model().to(device)
+    # Load model
+    model = load_model(model_path=args.model_path, classes_file=args.classes_file).to(device)
 
     # Load and preprocess image
-    img = Image.open(args.image_path).convert("RGB")
+    img = Image.open(args.image_path).convert("RGB")  # requires adding image-path arg
 
     # Predict
     pred_idx, conf = predict_image(model, device, img)
