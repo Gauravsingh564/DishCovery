@@ -4,37 +4,29 @@ from PIL import Image
 import gdown
 import torch
 import json
-from Script.prediction import load_model, predict_image  # assumes load_model reads model.pth from cwd
+from Script.prediction import load_model, predict_image
 
-import os
-BASE = os.path.dirname(__file__)            # the folder where app.py lives
+BASE = os.path.dirname(__file__)
 CLASS_FILE = os.path.join(BASE, "meta", "classes.txt")
-NUT_FILE   = os.path.join(BASE, "meta", "classes_nutrition.json")
-threshold=20
-# Cache downloads and model loading to speed up repeated inference
-@st.cache(allow_output_mutation=True)
+NUT_FILE = os.path.join(BASE, "meta", "classes_nutrition.json")
+threshold = 20
+
+@st.cache_data
 def fetch_weights(drive_id: str, dst: str = "model.pth"):
     """
     Download model weights from Google Drive to `dst` if not already present.
-    `drive_id` can be either:
-      - a file ID (the alphanumeric part from share link)
-      - a full shareable URL (https://drive.google.com/file/d/.../view?usp=sharing)
     """
     if not os.path.exists(dst):
-        # Determine download URL
         if drive_id.startswith("http"):
-            # Convert share URL to direct download
             url = drive_id
-            # If it ends with /view?usp=sharing, switch to export=download
             if "/view" in url:
                 url = url.split("/view")[0] + "/uc?export=download"
         else:
-            # drive_id is raw ID
             url = f"https://drive.google.com/uc?export=download&id={drive_id}"
         gdown.download(url, dst, quiet=False)
     return dst
 
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def load_model_and_data():
     # Download model weights
     drive_id = st.secrets.get("drive_model_id")
@@ -43,21 +35,20 @@ def load_model_and_data():
         st.stop()
     fetch_weights(drive_id)
 
-    # Load model (prediction.load_model should load from local 'model.pth')
+    # Load model
     model = load_model(model_path="model.pth", classes_file=CLASS_FILE)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
     # Load class names
     with open(CLASS_FILE) as f:
-     class_names = [line.strip() for line in f if line.strip()]
+        class_names = [line.strip() for line in f if line.strip()]
 
     # Load nutrition data from JSON
     with open(NUT_FILE) as f:
-     nutrition_data = json.load(f)
+        nutrition_data = json.load(f)
 
     return model, device, class_names, nutrition_data
-
 
 def main():
     st.title("🍽️ Food Classifier & Nutrition Facts")
@@ -77,7 +68,6 @@ def main():
         # Show warning if no food detected
         if confidence <= threshold or label.lower() == "nofood":
             st.warning("No food detected in the image. Please upload an appropriate dish image.")
-            # st.image(image, use_column_width=True)
         else:
             st.success(f"Prediction: {label} ({confidence:.2f}%)")
 
