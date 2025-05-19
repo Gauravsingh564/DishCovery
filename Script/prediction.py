@@ -15,26 +15,34 @@ def fetch_weights(drive_id: str, dst: str = "model.pth"):
     `drive_id` is the file ID from your Drive share link.
     """
     if not os.path.exists(dst):
-        url = f"https://drive.google.com/file/d/1Sh447_nPFg8WMIzX9k2ryQXZhbqEU42C/view?usp=drive_link={drive_id}"
+        url = f"https://drive.google.com/uc?id={drive_id}"
         gdown.download(url, dst, quiet=False)
     return dst
 
 
-def load_model(model_path: str = "model.pth", classes_file: str = "classes.txt"):
+def load_model(model_path: str = "model.pth", classes_file: str = None):
     """
-    Builds the model based on the number of classes in `classes_file`
-    and loads weights from `model_path`.
+    Builds the model based on `classes_file` and loads weights from `model_path`.
+    If `classes_file` is None, defaults to meta/classes.txt next to this script.
+    Returns a torch.nn.Module ready for inference.
     """
-    # Determine number of classes
+    # Determine the classes file location
+    if classes_file is None:
+        base = os.path.dirname(__file__)
+        classes_file = os.path.join(base, "meta", "classes.txt")
+
+    # Read class labels
     with open(classes_file) as f:
         class_names = [line.strip() for line in f if line.strip()]
     num_classes = len(class_names)
 
-    # Initialize and load weights
+    # Initialize model architecture
     model = get_model(num_classes=num_classes)
+
+    # Load weights
     state = torch.load(model_path, map_location="cpu")
     model.load_state_dict(state)
-    return model
+    return model, class_names
 
 
 def predict_image(model, device, img: Image.Image):
@@ -68,12 +76,16 @@ def main():
         help="Local path to model weights (.pth)"
     )
     parser.add_argument(
-        "--classes-file", type=str, default="classes.txt",
+        "--classes-file", type=str, default=None,
         help="Path to classes txt (one per line)"
     )
     parser.add_argument(
-        "--nutrition-file", type=str, default="classes_nutrition.json",
+        "--nutrition-file", type=str, default=None,
         help="Path to classes_nutrition.json"
+    )
+    parser.add_argument(
+        "--image-path", type=str, required=True,
+        help="Path to input image file"
     )
     parser.add_argument(
         "--threshold", type=float, default=0.2,
@@ -81,55 +93,58 @@ def main():
     )
     args = parser.parse_args()
 
-    # Optionally fetch weights from Drive
+    # Fetch weights if drive_id provided
     if args.drive_id:
         fetch_weights(args.drive_id, dst=args.model_path)
 
-    # Load metadata
-    with open(args.classes_file) as f:
-        class_names = [line.strip() for line in f if line.strip()]
-    with open(args.nutrition_file) as j:
+    # Determine metadata paths
+    base = os.path.dirname(__file__)
+    classes_file = args.classes_file or os.path.join(base, "meta", "classes.txt")
+    nutrition_file = args.nutrition_file or os.path.join(base, "meta", "classes_nutrition.json")
+
+    # Load model and class names
+    model, class_names = load_model(model_path=args.model_path, classes_file=classes_file)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
+
+    # Load nutrition data
+    with open(nutrition_file) as j:
         nutrition_data = json.load(j)
 
-    # Device setup
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    # Load model
-    model = load_model(model_path=args.model_path, classes_file=args.classes_file).to(device)
-
     # Load and preprocess image
-    img = Image.open(args.image_path).convert("RGB")  # requires adding image-path arg
+    img = Image.open(args.image_path).convert("RGB")
 
     # Predict
     pred_idx, conf = predict_image(model, device, img)
-    pred_label = class_names[pred_idx].lower()
+    label = class_names[pred_idx]
+    confidence = conf * 100
 
-    # Plot result
+    # Display image with prediction
     fig, ax = plt.subplots(figsize=(6,6))
     ax.imshow(img)
     ax.axis("off")
-    if conf < args.threshold or pred_label == "nofood":
+    if conf < args.threshold or label.lower() == "nofood":
         title = "No Food"
     else:
-        title = f"{pred_label} ({conf*100:.1f}%)"
+        title = f"{label} ({confidence:.1f}%)"
     ax.set_title(title)
     plt.tight_layout()
     plt.show()
 
     # Console output
     print(title)
-    if conf < args.threshold or pred_label == "nofood":
+    if conf < args.threshold or label.lower() == "nofood":
         print("No food found in this image, please upload an appropriate image.")
         return
 
-    # Display nutrition
-    info = nutrition_data.get(pred_label)
+    # Display nutrition info
+    info = nutrition_data.get(label.lower(), None)
     if info:
         print("\nNutrition per 100 g:")
         for nutrient, val in info.items():
             print(f"  {nutrient.capitalize():12}: {val}")
     else:
-        print("Nutrition info not found for:", pred_label)
+        print("Nutrition info not found for:", label)
 
 
 if __name__ == "__main__":
