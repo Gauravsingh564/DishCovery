@@ -10,7 +10,7 @@ import os
 BASE = os.path.dirname(__file__)            # the folder where app.py lives
 CLASS_FILE = os.path.join(BASE, "meta", "classes.txt")
 NUT_FILE   = os.path.join(BASE, "meta", "classes_nutrition.json")
-
+threshold=20
 # Cache downloads and model loading to speed up repeated inference
 @st.cache(allow_output_mutation=True)
 def fetch_weights(drive_id: str, dst: str = "model.pth"):
