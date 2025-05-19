@@ -10,7 +10,7 @@ from Script.prediction import load_model, predict_image
 st.set_page_config(
     page_title="DishCovery",
     page_icon="logo.jpg",    # (this appears in the browser tab)
-    layout="wide"            # allow us to use wider columns
+    # layout="wide"            # allow us to use wider columns
 )
 
 BASE = os.path.dirname(__file__)
