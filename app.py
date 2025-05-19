@@ -1,5 +1,4 @@
 import os
-import base64
 import streamlit as st
 from PIL import Image
 import gdown
@@ -7,49 +6,14 @@ import torch
 import json
 from Script.prediction import load_model, predict_image
 
-# ─── 0) Background setup ──────────────────────────────────────────────────────
-def set_background(png_file: str):
-    """Inject a base64‐encoded background image via CSS."""
-    with open(png_file, "rb") as img:
-        b64 = base64.b64encode(img.read()).decode()
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background-image: url("data:image/png;base64,{b64}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-# ─── 1) Page config ───────────────────────────────────────────────────────────
+# ─── 1) Set page config with favicon (default is centered) ────────────────────
 st.set_page_config(
     page_title="DishCovery",
-    page_icon="logo.png",
-    # layout="centered"
+    page_icon="logo.png",    # browser tab icon
+    # layout="centered"      # you can uncomment this to be explicit
 )
 
-# ─── 2) Inject background ────────────────────────────────────────────────────
-set_background("background.png")
-
-# ─── 3) Force all text to black ───────────────────────────────────────────────
-st.markdown(
-    """
-    <style>
-      /* make every Streamlit-rendered text element black */
-      .stApp * {
-        color: #000000 !important;
-      }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-BASE       = os.path.dirname(__file__)
+BASE = os.path.dirname(__file__)
 CLASS_FILE = os.path.join(BASE, "meta", "classes.txt")
 NUT_FILE   = os.path.join(BASE, "meta", "classes_nutrition.json")
 threshold  = 20
@@ -95,12 +59,12 @@ def load_model_and_data():
     return model, device, class_names, nutrition_data
 
 def main():
-    # ─── 4) Header with logo + title ────────────────────────────────────────────
+    # ─── 2) Header with logo + title ────────────────────────────────────────────
     col1, col2 = st.columns([1, 8])
     with col1:
         st.image("logo.png", width=60)
     with col2:
-        st.title("DishCovery")
+        st.title("🍽️ DishCovery")
 
     st.write(
         "Upload an image of a dish, and get its predicted label along with nutritional information."
@@ -133,4 +97,4 @@ def main():
             st.warning("No nutritional data available for this item.")
 
 if __name__ == "__main__":
-    main()
+    main() 
