@@ -33,12 +33,23 @@ def load_model_and_data():
     if not drive_id:
         st.error("Model Drive ID not found in secrets. Please set 'drive_model_id'.")
         st.stop()
+        
     fetch_weights(drive_id)
+
+    # Ensure model file exists
+    if not os.path.exists("model.pth"):
+        st.error("Model weights not found! Check if the download was successful.")
+        st.stop()
 
     # Load model
     model = load_model(model_path="model.pth", classes_file=CLASS_FILE)
+    if model is None:
+        st.error("Model could not be loaded. Check the model path or loading logic.")
+        st.stop()
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
+    print(f"Using device: {device}")
 
     # Load class names
     with open(CLASS_FILE) as f:
