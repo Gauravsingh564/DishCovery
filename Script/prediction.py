@@ -15,7 +15,7 @@ def fetch_weights(drive_id: str, dst: str = "model.pth"):
     `drive_id` is the file ID from your Drive share link.
     """
     if not os.path.exists(dst):
-        url = f"https://drive.google.com/uc?id={drive_id}"
+        url = f"https://drive.google.com/file/d/1Sh447_nPFg8WMIzX9k2ryQXZhbqEU42C/view?usp=sharing={drive_id}"
         gdown.download(url, dst, quiet=False)
     return dst
 
