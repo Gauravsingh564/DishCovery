@@ -32,7 +32,7 @@ def load_model_and_data():
     fetch_weights(drive_id)
 
     # Load model (prediction.load_model should load from local 'model.pth')
-    model = load_model()
+    model = load_model(model_path="model.pth", classes_file=CLASS_FILE)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
