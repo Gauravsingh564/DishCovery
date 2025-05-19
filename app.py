@@ -64,15 +64,6 @@ def main():
     st.write(
         "Upload an image of a dish, and get its predicted label along with nutritional information."
     )
-
-    # Confidence threshold slider
-    threshold = st.sidebar.slider(
-        "Confidence threshold (%) for detecting food",
-        min_value=0,
-        max_value=100,
-        value=20
-    )
-
     uploaded = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
     if uploaded:
         image = Image.open(uploaded).convert("RGB")
@@ -94,11 +85,11 @@ def main():
             if label in nutrition_data:
                 st.subheader("Nutritional Information")
                 info = nutrition_data[label]
-                st.write(f"- Calories: {info.get('calories', 'N/A')} kcal")
-                st.write(f"- Protein: {info.get('protein', 'N/A')} g")
-                st.write(f"- Fat: {info.get('fat', 'N/A')} g")
-                st.write(f"- Carbohydrates: {info.get('carbohydrate', 'N/A')} g")
-                st.write(f"- Energy: {info.get('energy', 'N/A')} kJ")
+                st.write(f"- Calories: {info.get('calories', 'N/A')}")
+                st.write(f"- Protein: {info.get('protein', 'N/A')}")
+                st.write(f"- Fat: {info.get('fat', 'N/A')}")
+                st.write(f"- Carbohydrates: {info.get('carbohydrate', 'N/A')}")
+                st.write(f"- Energy: {info.get('energy', 'N/A')}")
             else:
                 st.warning("No nutritional data available for this item.")
 
