@@ -1,4 +1,5 @@
 import os
+import base64
 import streamlit as st
 from PIL import Image
 import gdown
@@ -6,23 +7,55 @@ import torch
 import json
 from Script.prediction import load_model, predict_image
 
-# ─── 1) Set page config with favicon ──────────────────────────────────────────
+# Page config 
 st.set_page_config(
     page_title="DishCovery",
-    page_icon="logo.png",    # (this appears in the browser tab)
-    # layout="wide"            # allow us to use wider columns
+    page_icon="logo.png",
+    # layout="centered"
 )
 
-BASE = os.path.dirname(__file__)
+#Force all text to black via global CSS override 
+st.markdown(
+    """
+    <style>
+      /* apply black color to every element */
+      .stApp, .stApp * {
+        color: #000000 !important;
+      }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+#Background setup 
+def set_background(png_file: str):
+    """Inject a base64‐encoded background image via CSS."""
+    with open(png_file, "rb") as img:
+        b64 = base64.b64encode(img.read()).decode()
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpg;base64,{b64}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+# call background injection *after* config, before any UI components
+set_background("background.jpg")
+
+BASE       = os.path.dirname(__file__)
 CLASS_FILE = os.path.join(BASE, "meta", "classes.txt")
 NUT_FILE   = os.path.join(BASE, "meta", "classes_nutrition.json")
-threshold  = 20
+threshold  = 60
 
 @st.cache_data
 def fetch_weights(drive_id: str, dst: str = "model.pth"):
-    """
-    Download model weights from Google Drive to `dst` if not already present.
-    """
     if not os.path.exists(dst):
         if drive_id.startswith("http"):
             url = drive_id
@@ -35,19 +68,16 @@ def fetch_weights(drive_id: str, dst: str = "model.pth"):
 
 @st.cache_resource
 def load_model_and_data():
-    # Download model weights
     drive_id = st.secrets.get("drive_model_id")
     if not drive_id:
         st.error("Model Drive ID not found in secrets. Please set 'drive_model_id'.")
         st.stop()
     fetch_weights(drive_id)
 
-    # Ensure model file exists
     if not os.path.exists("model.pth"):
         st.error("Model weights not found! Check if the download was successful.")
         st.stop()
 
-    # Load model
     model, _ = load_model(model_path="model.pth", classes_file=CLASS_FILE)
     if model is None:
         st.error("Model could not be loaded. Check the model path or loading logic.")
@@ -56,21 +86,19 @@ def load_model_and_data():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
-    # Load class names
     with open(CLASS_FILE) as f:
         class_names = [line.strip() for line in f if line.strip()]
 
-    # Load nutrition data from JSON
     with open(NUT_FILE) as f:
         nutrition_data = json.load(f)
 
     return model, device, class_names, nutrition_data
 
 def main():
-    # ─── 2) Header with logo + title ────────────────────────────────────────────
+    # Header with logo + title
     col1, col2 = st.columns([1, 8])
     with col1:
-        st.image("logo.png", width=60)       # your logo file here
+        st.image("logo.png", width=60)
     with col2:
         st.title("DishCovery")
 
@@ -87,16 +115,12 @@ def main():
 
     model, device, class_names, nutrition_data = load_model_and_data()
 
-    # Predict label and confidence from PIL Image
     label, confidence = predict_image(model, device, image, class_names)
 
-    # Show warning if no food detected
     if confidence <= threshold or label.lower() == "nofood":
         st.warning("No food detected in the image. Please upload an appropriate dish image.")
     else:
         st.success(f"Prediction: {label} ({confidence:.2f}%)")
-
-        # Display nutrition info
         if label in nutrition_data:
             st.subheader("Nutritional Information per 100 gm")
             info = nutrition_data[label]

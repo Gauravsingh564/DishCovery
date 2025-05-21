@@ -249,6 +249,90 @@
   "energy": "506Kj",
   "fat": "5.2g"
 },
+  "eggs_benedict": {
+        "calories": "294.5Kcl",
+        "protein": "10.2g",
+        "carbohydrate": "15.1g",
+        "fat": "22.1g",
+        "energy": "1232.0Kj"
+    },
+    "escargots": {
+        "calories": "90.0Kcl",
+        "protein": "16.0g",
+        "carbohydrate": "2.4g",
+        "fat": "1.4g",
+        "energy": "377.0Kj"
+    },
+    "falafel": {
+        "calories": "444.0Kcl",
+        "protein": "17.7g",
+        "carbohydrate": "41.3g",
+        "fat": "23.5g",
+        "energy": "1857.3Kj"
+    },
+    "filet_mignon": {
+        "calories": "267.0Kcl",
+        "protein": "26.0g",
+        "carbohydrate": "0.0g",
+        "fat": "18.0g",
+        "energy": "1118.0Kj"
+    },
+    "fish_and_chips": {
+        "calories": "267.3Kcl",
+        "protein": "11.5g",
+        "carbohydrate": "34.6g",
+        "fat": "11.2g",
+        "energy": "1118.6Kj"
+    },
+    "foie_gras": {
+        "calories": "462.0Kcl",
+        "protein": "7.2g",
+        "carbohydrate": "3.1g",
+        "fat": "43.0g",
+        "energy": "1933.0Kj"
+    },
+    "french_fries": {
+        "calories": "312.7Kcl",
+        "protein": "3.9g",
+        "carbohydrate": "41.7g",
+        "fat": "15.2g",
+        "energy": "1308.5Kj"
+    },
+    "french_onion_soup": {
+        "calories": "53.1Kcl",
+        "protein": "2.1g",
+        "carbohydrate": "5.3g",
+        "fat": "2.9g",
+        "energy": "222.2Kj"
+    },
+    "french_toast": {
+        "calories": "248.3Kcl",
+        "protein": "10.0g",
+        "carbohydrate": "33.3g",
+        "fat": "6.7g",
+        "energy": "1038.3Kj"
+    },
+    "fried_calamari": {
+        "calories": "175.0Kcl",
+        "protein": "13.5g",
+        "carbohydrate": "16.5g",
+        "fat": "5.8g",
+        "energy": "732.0Kj"
+    },
+    "fried_rice": {
+        "calories": "150.6Kcl",
+        "protein": "3.2g",
+        "carbohydrate": "29.0g",
+        "fat": "2.7g",
+        "energy": "629.7Kj"
+    },
+    "frozen_yogurt": {
+        "calories": "122.8Kcl",
+        "protein": "3.5g",
+        "carbohydrate": "20.6g",
+        "fat": "3.1g",
+        "energy": "514.0Kj"
+},
  
 "garlic_bread": {
   "protein": "7.8g",

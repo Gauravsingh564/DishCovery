@@ -81,7 +81,7 @@ def main():
                         help="Path to classes_nutrition.json file")
     parser.add_argument("--image-path", type=str, required=True,
                         help="Path to the input image file")
-    parser.add_argument("--threshold", type=float, default=0.2,
+    parser.add_argument("--threshold", type=float, default=60,
                         help="Confidence threshold (0-1) below which output 'No Food'")
     args = parser.parse_args()
 
@@ -103,7 +103,7 @@ def main():
     fig, ax = plt.subplots(figsize=(6,6))
     ax.imshow(img)
     ax.axis("off")
-    if confidence/100.0 < args.threshold or label.lower() == "nofood":
+    if confidence  <= args.threshold or label.lower() == "nofood":
         title = "No Food"
     else:
         title = f"{label} ({confidence:.1f}%)"
@@ -112,7 +112,7 @@ def main():
     plt.show()
 
     print(title)
-    if confidence/100.0 < args.threshold or label.lower() == "nofood":
+    if confidence <= args.threshold or label.lower() == "nofood":
         print("No food found in this image, please upload an appropriate image.")
         return
 
