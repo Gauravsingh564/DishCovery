@@ -7,14 +7,14 @@ import torch
 import json
 from Script.prediction import load_model, predict_image
 
-# ─── 1) Page config ───────────────────────────────────────────────────────────
+# Page config 
 st.set_page_config(
     page_title="DishCovery",
     page_icon="logo.png",
     # layout="centered"
 )
 
-# ─── 1a) Force all text to black via global CSS override ──────────────────────
+#Force all text to black via global CSS override 
 st.markdown(
     """
     <style>
@@ -27,7 +27,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# ─── 0) Background setup ──────────────────────────────────────────────────────
+#Background setup 
 def set_background(png_file: str):
     """Inject a base64‐encoded background image via CSS."""
     with open(png_file, "rb") as img:
@@ -95,7 +95,7 @@ def load_model_and_data():
     return model, device, class_names, nutrition_data
 
 def main():
-    # ─── 2) Header with logo + title ────────────────────────────────────────────
+    # Header with logo + title
     col1, col2 = st.columns([1, 8])
     with col1:
         st.image("logo.png", width=60)
