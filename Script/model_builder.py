@@ -1,6 +1,5 @@
 import torch.nn as nn
 from torchvision.models import swin_b, Swin_B_Weights
-
 def get_model(num_classes: int = 102, dropout_p: float = 0.2) -> nn.Module:
     """
     Build and return a Swin-B model with a custom classification head.
