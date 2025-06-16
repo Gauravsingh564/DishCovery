@@ -8,7 +8,6 @@ from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.models import Swin_B_Weights
 from model_builder import get_model
-
 def train_step(model, dataloader, loss_fn, optimizer, device):
     model.train()
     total_loss, total_correct = 0.0, 0
