@@ -13,7 +13,6 @@ st.set_page_config(
     page_icon="logo.png",
     # layout="centered"
 )
-
 #Force all text to black via global CSS override 
 st.markdown(
     """
